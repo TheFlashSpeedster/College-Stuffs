@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>INT335 Design Thinking – MCQ Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#eef1f6; --surface:#ffffff; --ink:#14213d; --muted:#5b6882; --line:#d5dbe6;
+  --accent:#2447d6; --accent-ink:#ffffff; --accent-soft:#e3e9fc;
+  --ok:#14804a; --ok-soft:#dff3e8; --bad:#c0392b; --bad-soft:#fbe5e2;
+  --easy:#2f9e6b; --mod:#d49a1a; --hard:#c0392b; --mix:#6a4fc9;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1424; --surface:#172038; --ink:#e8ecf6; --muted:#97a3bd; --line:#2a3555;
+    --accent:#7c97ff; --accent-ink:#0e1424; --accent-soft:#222e57;
+    --ok:#52d196; --ok-soft:#16362a; --bad:#ff8a7a; --bad-soft:#3d1f1c;
+    --easy:#52d196; --mod:#f0bb4a; --hard:#ff8a7a; --mix:#a590ff;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1424; --surface:#172038; --ink:#e8ecf6; --muted:#97a3bd; --line:#2a3555;
+  --accent:#7c97ff; --accent-ink:#0e1424; --accent-soft:#222e57;
+  --ok:#52d196; --ok-soft:#16362a; --bad:#ff8a7a; --bad-soft:#3d1f1c;
+  --easy:#52d196; --mod:#f0bb4a; --hard:#ff8a7a; --mix:#a590ff;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;font-size:16px}
+h1,h2,h3{font-family:"Bricolage Grotesque","IBM Plex Sans",system-ui,sans-serif;margin:0;line-height:1.15;letter-spacing:-.01em}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px}
+.brand{font-size:14px;color:var(--muted);font-weight:500}
+.ghost{background:transparent;border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:14px;color:var(--muted)}
+.ghost:hover{border-color:var(--accent);color:var(--ink)}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:12px 20px;font-weight:600;font-size:16px}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.sec{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.sec:hover{border-color:var(--accent)}
+
+/* home */
+.hero{padding:28px 0 20px}
+.hero h1{font-size:clamp(30px,6vw,44px)}
+.hero p{color:var(--muted);margin:10px 0 0;max-width:56ch}
+.opts{display:flex;flex-wrap:wrap;gap:10px 22px;margin:22px 0 8px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.opts label{display:flex;align-items:center;gap:8px;font-size:15px;cursor:pointer}
+.opts input{width:18px;height:18px;accent-color:var(--accent)}
+.sets{display:grid;gap:12px;margin-top:18px}
+.set{display:grid;grid-template-columns:6px 1fr auto;align-items:stretch;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-align:left;padding:0;width:100%}
+.set:hover{border-color:var(--accent)}
+.set .bar{background:var(--c)}
+.set .body{padding:16px 18px}
+.set h3{font-size:20px}
+.set .meta{color:var(--muted);font-size:14px;margin-top:4px}
+.set .best{display:flex;flex-direction:column;justify-content:center;align-items:flex-end;padding:0 18px;font-size:13px;color:var(--muted);white-space:nowrap}
+.set .best b{font-size:20px;color:var(--ink);font-family:"Bricolage Grotesque",sans-serif}
+
+/* quiz */
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:6px 0 10px;font-size:14px;color:var(--muted)}
+.qhead .title{font-weight:600;color:var(--ink)}
+.prog{height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 18px}
+.dot{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:12px;font-weight:600;color:var(--muted);padding:0}
+.dot.cur{outline:2px solid var(--accent);outline-offset:1px;color:var(--ink)}
+.dot.done{background:var(--accent-soft);color:var(--ink);border-color:transparent}
+.dot.ok{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.dot.bad{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 20px}
+.tag{display:inline-block;font-size:13px;font-weight:600;color:var(--c);margin-bottom:8px}
+.q{font-size:clamp(19px,3.4vw,23px);font-family:"Bricolage Grotesque","IBM Plex Sans",sans-serif;font-weight:500;line-height:1.35;margin:0 0 18px}
+.choices{display:grid;gap:10px}
+.ch{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;text-align:left;width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:12px 14px}
+.ch:hover:not(:disabled){border-color:var(--accent)}
+.ch .l{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:600;color:var(--muted)}
+.ch.sel{border-color:var(--accent);background:var(--accent-soft)}
+.ch.sel .l{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.ch.ok{border-color:var(--ok);background:var(--ok-soft)}
+.ch.ok .l{background:var(--ok);border-color:var(--ok);color:#fff}
+.ch.bad{border-color:var(--bad);background:var(--bad-soft)}
+.ch.bad .l{background:var(--bad);border-color:var(--bad);color:#fff}
+.ch:disabled{cursor:default}
+.exp{margin-top:16px;padding:14px 16px;border-radius:10px;background:var(--accent-soft);font-size:15px}
+.exp strong{display:block;margin-bottom:2px}
+.exp.good strong{color:var(--ok)} .exp.wrong strong{color:var(--bad)}
+.actions{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+
+/* results */
+.score{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:10px 0 4px}
+.score .n{font-family:"Bricolage Grotesque",sans-serif;font-size:64px;font-weight:700;line-height:1}
+.score .of{color:var(--muted);font-size:18px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 22px}
+.stat{flex:1 1 120px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat b{display:block;font-size:22px;font-family:"Bricolage Grotesque",sans-serif}
+.stat span{font-size:13px;color:var(--muted)}
+.rev{margin-top:12px}
+.rev details{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.rev summary{cursor:pointer;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;list-style:none;font-size:15px}
+.rev summary::-webkit-details-marker{display:none}
+.rev .mk{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff;margin-top:1px}
+.mk.ok{background:var(--ok)} .mk.bad{background:var(--bad)}
+.rev .det{padding:0 14px 14px 46px;font-size:14.5px;color:var(--muted)}
+.rev .det p{margin:4px 0}
+.rev .det b{color:var(--ink)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.filter{display:flex;gap:8px;margin:18px 0 8px}
+.filter button{padding:6px 14px;border-radius:99px;border:1px solid var(--line);background:transparent;font-size:14px}
+.filter button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hidden{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:480px){.set{grid-template-columns:6px 1fr}.set .best{display:none}.card{padding:18px 14px}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+/* ---------- QUESTION BANK ----------
+   Each item: [question, [optA, optB, optC, optD], correctIndex(0-3), explanation]
+   To add more sets, push a new object into SETS. */
+const SETS = [
+{
+ id:"easy1", name:"Easy – Set 1", level:"Easy", color:"var(--easy)", mins:45,
+ qs:[
+["Which mode of thinking is logical, structured, sequential, and analytical?",["Diffuse mode","Focused mode","Abstract mode","Random mode"],1,"Focused mode concentrates attention on a specific task using established neural pathways."],
+["What does the letter 'V' stand for in the VARK learning framework?",["Verbal","Visual","Virtual","Vocal"],1,"In VARK, V stands for Visual preference (diagrams, charts, images)."],
+["Seeing a paper clip strictly as a tool to hold papers together is an example of:",["Functional fixedness","Brainstorming","Diffuse thinking","Empathy"],0,"Functional fixedness limits an object's use to its conventional purpose."],
+["Which stage of the Stanford d.school framework focuses on generating a large quantity of ideas?",["Empathize","Define","Ideate","Test"],2,"Ideation is the phase dedicated to expanding options and creating ideas."],
+["The IDEO Human-Centred Design framework has three overlapping lenses: Desirability, Feasibility, and:",["Profitability","Viability","Sustainability","Adaptability"],1,"The three IDEO lenses are Desirability, Feasibility, and Viability."],
+["In SCAMPER, what does the letter 'S' stand for?",["Solve","Substitute","Simplify","Structure"],1,"S stands for Substitute (replacing materials, processes, or components)."],
+["What type of thinking is used to narrow down choices and select the single best option?",["Divergent thinking","Convergent thinking","Lateral thinking","Abstract thinking"],1,"Convergent thinking evaluates and selects the best option through logic."],
+["The primary goal during the initial phase of brainstorming is:",["Quality of ideas","Quantity of ideas","Cost estimation","Technical feasibility"],1,"Brainstorming prioritizes quantity before quality."],
+["In the AEIOU observation framework, what does the 'E' represent?",["Emotion","Environment","Evaluation","Empathy"],1,"AEIOU = Activities, Environments, Interactions, Objects, Users."],
+["Which study technique has been shown by research to reliably improve learning retention?",["Matching instruction to VARK preference","Retrieval practice","Cramming overnight","Passive re-reading"],1,"Retrieval practice, spacing, and interleaving replicate positive results."],
+["What is the first stage in the Stanford d.school Design Thinking model?",["Define","Prototype","Empathize","Ideate"],2,"Empathize is stage 1, focused on understanding user needs."],
+["A product or idea that is novel but delivers no real-world value is classified as:",["Innovation","Invention without innovation","Market success","Feasible prototype"],1,"Invention creates a new thing; innovation occurs only when value is delivered."],
+["The technique of sketching 8 distinct ideas in 8 minutes is known as:",["SCAMPER","Crazy 8s","Mind Mapping","Reverse Thinking"],1,"Crazy 8s requires 8 distinct sketches in 8 minutes under pressure."],
+["\"How Might We\" (HMW) statements reframe problems into:",["Constraints","Opportunities","Final solutions","Budget limits"],1,"HMW statements convert problems into open opportunities for innovation."],
+["What type of problem has clear goals, strict constraints, and one correct answer?",["Ill-defined problem","Wicked problem","Well-defined problem","Abstract problem"],2,"Well-defined problems have clear parameters and single solutions (e.g., equations)."],
+["In SCAMPER, removing an unnecessary feature to simplify a product uses which prompt?",["Adapt","Eliminate","Modify","Reverse"],1,"Eliminate focuses on removing non-essential parts."],
+["Which thinking mode allows the brain to make broader, relaxed connections between ideas?",["Focused mode","Diffuse mode","Linear mode","Analytical mode"],1,"Diffuse mode is relaxed, exploratory, and associative."],
+["What does 'K' stand for in the VARK framework?",["Knowledge","Kinetic","Kinesthetic","Key learning"],2,"K represents Kinesthetic (hands-on, practical learning)."],
+["The principle behind the improv brainstorming rule \"Yes, and...\" is to:",["Critique every idea immediately","Accept a contribution and build upon it","Reject wild ideas","Focus on budget constraints first"],1,"\"Yes, and...\" extends lines of thought without blocking them."],
+["What is a persona in Design Thinking?",["A real, specific customer","A fictional character based on user research patterns","A stereotype generated without data","The company CEO"],1,"Personas represent user archetypes built on empirical research data."],
+["In SCAMPER, combining two separate objects like a pen and a USB drive is:",["Substitute","Combine","Adapt","Reverse"],1,"Combine merges two existing products or concepts."],
+["What matrix plots options along Relevance and Feasibility axes?",["2×2 Prioritisation Matrix","SCAMPER Matrix","Empathy Map","Mind Map"],0,"The 2×2 matrix sorts ideas into Quick Wins, Prioritise, Consider, and Avoid."],
+["Asking \"How can we make this problem worse?\" is part of:",["SCAMPER","Reverse Thinking / Inversion","Mind Mapping","Linear analysis"],1,"Reverse thinking asks how to cause failure to uncover hidden solutions."],
+["A prototype built early in the design process should ideally be:",["Highly expensive and final","Simple, quick, and cheap to test","Fully coded and functional","Market-ready"],1,"Early prototyping focuses on low-cost rapid learning from feedback."],
+["The IDEO lens assessing \"Can we actually build this technically?\" is:",["Desirability","Feasibility","Viability","Utility"],1,"Feasibility evaluates technical capability and resources."],
+["Which of these is a cognitive block to creativity?",["Open-mindedness","Premature judgment","Divergent thinking","User empathy"],1,"Premature judgment rejects ideas before they can be fully explored."],
+["Affinity clustering organizes scattered ideas by:",["Alphabetical order","Grouping them into thematic clusters","Author's seniority","Financial cost"],1,"Affinity clustering groups related sticky notes by underlying themes."],
+["Divergent thinking is best used during which phase?",["Final decision making","Generating alternative ideas","Writing financial reports","Final product launch"],1,"Divergent thinking expands options and generates alternatives."],
+["Biomimicry (e.g., Velcro inspired by plant burrs) falls under which SCAMPER letter?",["S (Substitute)","A (Adapt)","M (Modify)","R (Reverse)"],1,"Adapt involves borrowing mechanisms or patterns from nature or other industries."],
+["In traditional Waterfall development, user feedback typically occurs:",["Continuously throughout","At the very beginning only","At the end of the linear pipeline","Never"],2,"Waterfall is linear; feedback comes late, making changes costly."]
+ ]
+},
+{
+ id:"easy2", name:"Easy – Set 2", level:"Easy", color:"var(--easy)", mins:45,
+ qs:[
+["Which thinking mode operates along established neural pathways to perform step-by-step tasks?",["Diffuse mode","Focused mode","Random mode","Associative mode"],1,"Focused mode is structured and concentrated on specific tasks like solving equations or writing code."],
+["What does the letter 'A' stand for in the VARK framework?",["Applied","Auditory","Action-oriented","Analytical"],1,"Auditory preferences involve listening and discussion."],
+["Viewing a matchbox strictly as storage for matches rather than a wall candle holder illustrates:",["Divergent thinking","Functional fixedness","Brainstorming","Empathy"],1,"Functional fixedness limits an object to its traditional purpose."],
+["Which Stanford d.school stage involves synthesizing observations into a focused problem statement?",["Empathize","Define","Prototype","Test"],1,"The Define stage pinpoints the core problem from empathy research."],
+["In the IDEO framework, evaluating whether an idea is economically sustainable checks its:",["Desirability","Feasibility","Viability","Accessibility"],2,"Viability asks if a solution is financially and operationally sustainable."],
+["In SCAMPER, what does 'C' represent?",["Create","Combine","Compare","Classify"],1,"Combine merges two or more ideas, features, or processes."],
+["What type of thinking expands options and explores divergent possibilities?",["Convergent thinking","Divergent thinking","Linear thinking","Sequential thinking"],1,"Divergent thinking focuses on generating many original ideas."],
+["Alex Osborn's foundational rules for brainstorming emphasize:",["Immediate criticism","Suspending judgment and aiming for quantity","Selecting one idea early","Enforcing strict budgets"],1,"Osborn established deferring judgment and prioritizing quantity."],
+["In the AEIOU observation framework, 'O' stands for:",["Operations","Objects","Options","Outcomes"],1,"Objects are the physical items present in the observed setting."],
+["Which study strategy is proven to replicate strong retention results?",["Matching instruction to VARK preference","Spacing","Cramming","Passive highlighting"],1,"Retrieval practice, spacing, and interleaving are evidence-backed study strategies."],
+["Stage 4 of the Stanford d.school framework is:",["Ideate","Prototype","Test","Define"],1,"Prototype is stage 4, where tangible representations are built."],
+["An idea that generates original concepts but is never created or used is best described as:",["Innovation","Creativity / Idea stage","Market launch","Final product"],1,"Creativity produces ideas; invention creates the thing; innovation delivers value."],
+["What technique uses branches radiating from a central topic to organize ideas visually?",["SCAMPER","Mind Mapping","Crazy 8s","Inversion"],1,"Mind maps expand outward from a central concept using keywords and sub-branches."],
+["What question phrasing turns traditional problems into innovation opportunities?",["Why did this break?","How Might We?","Who is to blame?","How much will this cost?"],1,"HMW statements shift focus from describing problems to imagining possibilities."],
+["What type of problem has unclear goals and many possible solutions?",["Well-defined problem","Ill-defined problem","Linear equation","Deterministic system"],1,"Ill-defined problems lack straightforward paths and unambiguous answers."],
+["Borrowing Velcro design from plant burrs applies which SCAMPER prompt?",["Substitute","Adapt","Eliminate","Reverse"],1,"Adapt involves borrowing ideas or mechanisms from nature or other domains."],
+["Dmitri Mendeleev's arrangement of the periodic table after stepping away illustrates:",["Pure focused effort","Diffuse mode processing after focused struggle","Random memory loss","Linear engineering"],1,"Diffuse thinking reorganizes material previously loaded through focused study."],
+["What does 'R' stand for in the VARK framework?",["Rational","Reading/Writing","Reflective","Research"],1,"R represents Reading/Writing preference."],
+["Rejecting an idea ten seconds into a brainstorm violates which principle?",["Deferring judgment","Setting a strict budget","Speeding up convergence","Code optimization"],0,"Premature judgment shuts down idea generation."],
+["An empathy map typically contains four quadrants: Says, Thinks, Does, and:",["Buys","Feels","Codes","Markets"],1,"The four standard empathy map quadrants are Says, Thinks, Does, and Feels."],
+["In SCAMPER, replacing petrol engines with electric batteries is:",["Combine","Substitute","Reverse","Minify"],1,"Replacing components or energy sources uses Substitute."],
+["Prioritizing ideas based on Impact vs. Effort uses which tool?",["Impact-Effort Matrix","Empathy Map","Mind Map","SCAMPER Table"],0,"The Impact-Effort matrix categorizes top priorities, strategic goals, and items to avoid."],
+["Inversion thinking focuses on:",["Pursuing direct success","Identifying what to avoid and how to fail","Increasing project cost","Copying competitors"],1,"Inversion asks what failure vectors to avoid."],
+["Testing prototypes with users provides feedback to refine the solution in an:",["Linear pipeline","Iterative loop","Static database","One-way workflow"],1,"Design Thinking is inherently iterative rather than linear."],
+["The IDEO lens assessing \"Do people actually want this?\" is:",["Feasibility","Desirability","Viability","Profitability"],1,"Desirability measures human need and appeal."],
+["Rejecting ideas before exploring them fully is known as:",["Premature judgment","The expertise trap","Conformity","Diffuse thinking"],0,"Premature judgment is a cognitive block that stifles creative options."],
+["Grouping scattered sticky notes under common themes is:",["Mind mapping","Affinity clustering","Inversion","Reverse thinking"],1,"Affinity diagrams organize large volumes of ideas into logical groups."],
+["Convergent thinking is used to:",["Expand options endlessly","Evaluate and select the single best option","Ignore feasibility","Avoid decision making"],1,"Convergence narrows choices to make final selections."],
+["Changing a process order from store shopping to online ordering illustrates:",["Substitute","Reverse / Rearrange","Eliminate","Minify"],1,"Changing sequence or workflow order uses Reverse/Rearrange."],
+["Human-Centred Design places which entity at the core of all decisions?",["Technology stack","The user","Shareholder profit","Legal counsel"],1,"HCD revolves around understanding and solving human user needs."]
+ ]
+},
+{
+ id:"easy3", name:"Easy – Set 3", level:"Easy", color:"var(--easy)", mins:45,
+ qs:[
+["Solving mathematical proofs step-by-step uses:",["Focused mode","Diffuse mode","Intuitive mode","Unconscious mode"],0,"Step-by-step logical analytical work is focused mode."],
+["A student who learns best through practical, hands-on experience has a preference for:",["Visual","Kinesthetic","Auditory","Read/Write"],1,"Kinesthetic preferences lean on physical doing and experimentation."],
+["The Candle Problem illustrates breaking:",["Linear logic","Functional fixedness","Mathematical constraints","Market costs"],1,"Using the matchbox as a candle stand breaks functional fixedness."],
+["The final stage of the Stanford d.school process is:",["Prototype","Test","Define","Ideate"],1,"Testing evaluates prototypes with real users."],
+["The overlapping point of Desirability, Feasibility, and Viability in IDEO HCD yields:",["Invention","Innovation","Prototype","Persona"],1,"Genuine innovation lies at the intersection of all three lenses."],
+["In SCAMPER, 'M' stands for:",["Measure","Modify (Magnify / Minify)","Manage","Model"],1,"Modify alters size, shape, appearance, or features."],
+["Generating 30 ideas in 8 minutes prioritizes:",["Quality over quantity","Quantity over quality","Financial viability","Coding accuracy"],1,"Rapid sprints focus on maximizing idea count."],
+["Alex Osborn coined which classic group technique:",["Waterfall","Brainstorming","SCAMPER","Mind Mapping"],1,"Alex Osborn created the foundational rules of brainstorming."],
+["In AEIOU, 'I' represents:",["Ideas","Interactions","Insights","Innovations"],1,"Interactions track exchanges between people, systems, and objects."],
+["A study strategy that interleaves topics improves:",["Long-term retention","Typing speed","Visual style score","Drawing ability"],0,"Interleaving is an evidence-backed cognitive learning technique."],
+["Stage 3 of the Stanford d.school framework is:",["Empathize","Ideate","Test","Define"],1,"Stage 3 is Ideate, focused on generating solution options."],
+["The first telephone created by Alexander Graham Bell is classified as an:",["Incremental improvement","Invention","Empathy map","Ill-defined task"],1,"Creating something entirely new that did not exist before is invention."],
+["What technique uses a 7-letter checklist to spark creative changes?",["VARK","SCAMPER","AEIOU","HMW"],1,"SCAMPER provides seven prompt letters for idea modification."],
+["Statements written as \"How might we...\" aim to:",["Limit project scope","Frame open opportunities for user-centered solutions","Assign blame for bugs","Calculate exact costs"],1,"HMW frames problems as constructive design challenges."],
+["Complex social challenges like climate change are categorized as:",["Well-defined problems","Wicked problems","Linear equations","Simple puzzles"],1,"Wicked problems are interconnected, systemic, and lack right/wrong answers."],
+["In SCAMPER, removing buttons to make a touchscreen device uses:",["Combine","Eliminate","Reverse","Adapt"],1,"Eliminating elements simplifies products."],
+["Relaxed thinking during a walk that triggers sudden insight uses:",["Focused mode","Diffuse mode","Linear mode","Strict calculation"],1,"Diffuse thinking connects broad ideas when attention relaxes."],
+["Preference for learning via charts, diagrams, and videos aligns with:",["Auditory","Visual","Kinesthetic","Read/Write"],1,"Visual preference centers on diagrams and spatial displays."],
+["Following conventional thinking solely to fit in with a group is:",["Conformity","Premature judgment","Expertise trap","Fear of failure"],0,"Conformity forces alignment with group norms."],
+["A target archetype representing a recurring behavioral pattern is a:",["Survey","Persona","Codebase","Constraint"],1,"Personas capture shared goals, behaviors, and frustrations."],
+["Merging a pen and a laser pointer into one device uses SCAMPER's:",["Substitute","Combine","Reverse","Eliminate"],1,"Combine joins functions into a single product."],
+["A weighted matrix helps teams:",["Generate 100 raw ideas","Evaluate and screen ideas against prioritized criteria","Draw wireframes","Conduct user interviews"],1,"Weighted matrices support objective decision-making."],
+["Asking \"How can we make library queues as slow as possible?\" uses:",["SCAMPER","Reverse thinking","Mind mapping","Affinity clustering"],1,"Reverse thinking explores deliberate failure to identify improvements."],
+["Testing early low-fidelity prototypes is beneficial because:",["Early failure is cheaper than late failure","High fidelity is impossible","Users prefer paper over code","It skips the empathy phase"],0,"Early low-cost testing prevents expensive late-stage changes."],
+["Technical feasibility evaluates whether:",["Users want the product","Available technology can support building the product","The product makes an immediate profit","The name is catchy"],1,"Feasibility checks technical capability and construction practicalities."],
+["Hesitation to share wild ideas due to criticism stems from:",["Fear of failure","The expertise trap","Diffuse mode","High confidence"],0,"Fear of failure and judgment hold people back from sharing ideas."],
+["The primary goal of affinity grouping is to:",["Discard 90% of ideas immediately","Organize ideas thematically to reveal hidden patterns","Rank team members","Calculate project costs"],1,"Affinity clustering tames large idea sets into logical groups."],
+["Divergent thinking is characterized as:",["Analytical and narrow","Creative and exploratory","Strict and rule-bound","Single-answer focused"],1,"Divergent thinking expands options through flexible, creative exploration."],
+["SCAMPER's 'P' prompt stands for:",["Plan","Put to another use","Prototype","Prioritize"],1,"'P' asks how a product can be repurposed in new contexts."],
+["Linear sequential product development is known as:",["Human-Centred Design","Waterfall methodology","Agile iteration","Design Sprint"],1,"Waterfall completes each step linearly before moving to the next."]
+ ]
+},
+{
+ id:"easy4", name:"Easy – Set 4", level:"Easy", color:"var(--easy)", mins:45,
+ qs:[
+["Analyzing dataset validation rules requires:",["Diffuse mode","Focused mode","Random thinking","Broad associative mode"],1,"Rule-following structured analytical work is focused mode."],
+["Statements paired as V=1+5, A=2+6, R=3+7, K=4+8 belong to:",["AEIOU scoring","VARK self-assessment","IDEO scoring","SCAMPER survey"],1,"The VARK Activity 1.2 scores eight statements into style pairs."],
+["Overcoming functional fixedness requires:",["Ignoring physical properties","Listing an object's properties first, then finding uses","Choosing the first conventional idea","Asking an executive for permission"],1,"Shifting focus to physical attributes breaks conventional frames."],
+["Stage 2 of the d.school design framework is:",["Empathize","Define","Ideate","Prototype"],1,"Stage 2 is Define, focused on framing the core problem statement."],
+["Meeting only Desirability and Feasibility while lacking Viability yields a concept that is:",["Fully innovative","Built and wanted, but economically unsustainable","Cheap but unwanted","Impossible to build"],1,"Lacking viability leaves a concept financially unsustainable."],
+["SCAMPER's 'E' stands for:",["Evaluate","Eliminate","Expand","Empathize"],1,"Eliminate focuses on removing unnecessary features or steps."],
+["Selecting the best bridge design using criteria matrices uses:",["Divergent thinking","Convergent thinking","Random selection","Diffuse thinking"],1,"Evaluating choices systematically to pick one option is convergent."],
+["\"Quantity breeds quality\" is a core tenet of:",["Financial audits","Brainstorming","Linear coding","Patent filing"],1,"Generating many options increases the likelihood of breakthrough ideas."],
+["In AEIOU, 'U' stands for:",["Utility","Users","Uniformity","Units"],1,"Users are the people whose behaviors and preferences are observed."],
+["Practice testing that forces retrieval strengthens:",["Memory access pathways","Visual art preferences","Auditory hearing limits","Handwriting speed"],0,"Retrieval practice solidifies access to stored knowledge."],
+["Stage 1 of the d.school design framework is:",["Define","Empathize","Test","Prototype"],1,"Empathize is the foundational first stage."],
+["The iPhone reshaping the smartphone market is an example of:",["Incremental improvement","Disruptive innovation","Functional fixedness","Well-defined problem"],1,"The iPhone transformed market structures and user expectations."],
+["Folding a paper into eight panels for rapid sketching is:",["Mind mapping","Crazy 8s","Affinity sorting","SCAMPER"],1,"Crazy 8s involves 8 distinct panel sketches."],
+["The action component of a How Might We statement defines:",["The budget limit","What we will do or create","The exact code language","The company CEO"],1,"HMW structure: Action + User + Goal."],
+["Problems with clear constraints and a single correct solution are:",["Ill-defined","Well-defined","Wicked","Abstract"],1,"Well-defined problems have clear goal structures and single answers."],
+["Changing a product size from large to miniature uses SCAMPER's:",["Substitute","Modify (Minify)","Reverse","Combine"],1,"Minify reduces dimensions or scope."],
+["Brainstorming unexpected connections between distant concepts uses:",["Focused mode","Diffuse mode","Step-by-step logic","Linear rules"],1,"Diffuse mode excels at creative, far-reaching mental associations."],
+["Preference for reading books and writing detailed notes indicates:",["Visual preference","Read/Write preference","Kinesthetic preference","Auditory preference"],1,"Read/Write learners favor text-based information."],
+["Over-reliance on past solutions due to extensive prior experience is:",["Premature judgment","The Expertise Trap","Conformity","Fear of failure"],1,"Expertise can blind designers to novel solutions in new contexts."],
+["A profile summarizing goals, behaviors, and pain points of target users is a:",["Survey report","User Persona","Code log","Matrix"],1,"Personas anchor human-centered decisions."],
+["Combining solar panels with a backpack to charge devices uses:",["Substitute","Combine","Reverse","Eliminate"],1,"Merging two distinct objects into one uses Combine."],
+["Prioritizing ideas along Impact and Effort axes identifies:",["Quick Wins, Strategic Priorities, Low Priority, and Avoid","Easy, Medium, Hard","Pass or Fail","Desirable, Feasible, Viable"],0,"The Impact-Effort matrix yields four actionable quadrants."],
+["Examining how to intentionally ruin customer experience is part of:",["Inversion / Reverse thinking","Mind mapping","Linear analysis","SCAMPER"],0,"Reverse thinking explores failure to find design solutions."],
+["Iterative prototyping helps teams:",["Learn from user feedback early and refine ideas","Guarantee instant financial success","Avoid building physical objects","Skip the define phase"],0,"Iteration refines solutions using empirical user testing."],
+["Checking whether a business model can fund servers long-term tests:",["Desirability","Viability","Feasibility","Novelty"],1,"Long-term economic self-sustainability is Viability."],
+["Rejecting an idea instantly during a group session is an example of:",["Premature judgment","Divergent output","Diffuse mode","Empathy"],0,"Premature judgment halts idea exploration prematurely."],
+["Visualizing ideas around a central node using branches is:",["Mind Mapping","SCAMPER","Inversion","Matrix analysis"],0,"Mind maps expand hierarchically from a central topic."],
+["Divergent thinking is designed to:",["Limit possibilities quickly","Expand possibilities and generate diverse options","Perform mathematical proofs","Rank ideas numerically"],1,"Divergence opens the space of solution possibilities."],
+["Changing a car's size to make it compact for city parking uses:",["Substitute","Modify (Minify)","Reverse","Combine"],1,"Minifying adjusts physical dimensions down."],
+["Human-Centred Design differs from traditional linear engineering because it is:",["Iterative and user-focused throughout","Rigid and fixed","Non-collaborative","Purely technology-driven"],0,"HCD integrates user empathy and continuous feedback throughout."]
+ ]
+},
+{
+ id:"easy5", name:"Easy – Set 5", level:"Easy", color:"var(--easy)", mins:45,
+ qs:[
+["Concentrated attention using established neural pathways defines:",["Diffuse mode","Focused mode","Unconscious mode","Associative mode"],1,"Focused mode is concentrated attention on structured tasks."],
+["Diagrams, charts, maps, and videos cater to which VARK preference?",["Visual","Auditory","Kinesthetic","Read/Write"],0,"Visual preferences favor spatial and graphical representations."],
+["Using a paper clip to eject a SIM card breaks:",["Functional fixedness","Mathematical constraints","Legal rules","Focus mode"],0,"Re-purposing an item beyond its conventional design breaks functional fixedness."],
+["What is Stage 5 of the d.school framework?",["Define","Test","Ideate","Empathize"],1,"Stage 5 is Test."],
+["Desirability, Feasibility, and Viability form the framework created by:",["Stanford d.school","IDEO","MIT Media Lab","Harvard Business School"],1,"IDEO developed the three overlapping lenses of Human-Centred Design."],
+["In SCAMPER, 'R' stands for:",["Reduce","Reverse / Rearrange","Research","Rebuild"],1,"Reverse/Rearrange alters sequence, order, or direction."],
+["Narrowing down ten ideas to select one workable solution is:",["Divergent thinking","Convergent thinking","Diffuse mode","Brainstorming"],1,"Convergent thinking narrows choices down through evaluation."],
+["Deferring judgment during initial ideation ensures:",["Psychological safety and maximum idea output","Immediate technical accuracy","Low financial cost","Fast code execution"],0,"Suspending judgment protects creative ideas from early elimination."],
+["Physical settings, lighting, and noise are recorded under which AEIOU category?",["Activities","Environments","Objects","Users"],1,"Environments capture physical space conditions."],
+["Re-testing memory over increasing time intervals is known as:",["Spacing","Cramming","VARK styling","Passive reading"],0,"Spacing spreads study sessions over time to boost memory."],
+["Stage 2 of the d.school model is:",["Empathize","Define","Prototype","Test"],1,"Define follows Empathize."],
+["Successfully implementing creative ideas to create value is:",["Creativity","Innovation","Invention","Brainstorming"],1,"Innovation is defined as delivered value."],
+["What technique forces 8 ideas in 8 minutes?",["Crazy 8s","Mind Mapping","SCAMPER","Matrix"],0,"Crazy 8s is a fast sketching sprint."],
+["Re-framing a problem using \"How Might We\" focuses on:",["Blame","Opportunities","Costs","Fixed rules"],1,"HMW frames problems as constructive innovation opportunities."],
+["Problems with unclear goals, multiple solution paths, and subjective evaluation are:",["Well-defined","Ill-defined","Linear equations","Simple puzzles"],1,"Ill-defined problems lack clear single answers."],
+["Removing extraneous steps from a sign-up process is SCAMPER's:",["Adapt","Eliminate","Reverse","Combine"],1,"Elimination removes non-essential steps."],
+["Making unexpected connections while taking a break uses:",["Focused mode","Diffuse mode","Deterministic logic","Step-by-step math"],1,"Diffuse processing forms broad mental associations."],
+["A student who scores high on 'need to physically try things' favors:",["Visual","Kinesthetic","Auditory","Read/Write"],1,"Kinesthetic preference centers on hands-on physical trial."],
+["Over-reliance on past answers that worked before is:",["The Expertise Trap","Fear of Failure","Conformity","Premature Judgment"],0,"Experience can lock creators into outdated templates."],
+["Empathy maps capture:",["Says, Thinks, Does, Feels","Code, Bugs, Tests, Deploys","Cost, Price, Profit, Margin","Input, Process, Output, Feedback"],0,"The four standard empathy quadrants map human experience."],
+["Replacing plastic bags with reusable cloth bags applies SCAMPER's:",["Combine","Substitute","Reverse","Minify"],1,"Replacing materials uses Substitute."],
+["Prioritizing ideas on a 2×2 grid evaluates:",["Relevance vs. Feasibility","Color vs. Shape","Age vs. Income","Speed vs. Distance"],0,"The 2×2 matrix plots Relevance against Feasibility."],
+["Exploring how to intentionally worsen a problem to discover solutions is:",["Reverse thinking","SCAMPER","Mind mapping","Linear analysis"],0,"Reverse thinking flips failure vectors into design instructions."],
+["Prototypes should be built early because:",["They are cheap and test assumptions quickly","High-fidelity builds are illegal","Users never change their minds","It avoids user testing"],0,"Early low-fidelity prototypes test core assumptions at low cost."],
+["Viability in HCD assesses whether an idea:",["Is technically buildable","Is economically sustainable","Looks visually attractive","Has a short name"],1,"Viability measures long-term economic sustainability."],
+["Premature judgment in ideation leads to:",["Dropping promising ideas before exploring them","Better technical quality","Lower project costs","Faster code compilation"],0,"Early criticism kills creative options."],
+["Organizing sticky notes into thematic groups is:",["Affinity clustering","Crazy 8s","SCAMPERing","Inversion"],0,"Affinity sorting groups ideas by shared themes."],
+["Divergent thinking is characterized by:",["Expanding possibilities","Selecting a single option","Strictly following rules","Numerical scoring"],0,"Divergence opens up diverse alternative paths."],
+["SCAMPER's 'A' stands for:",["Analyze","Adapt","Arrange","Assess"],1,"Adapt involves borrowing ideas from other fields or nature."],
+["Human-Centred Design differs from Waterfall by being:",["Iterative with user feedback loops","Strictly linear without iteration","Solely focused on software architecture","Non-collaborative"],0,"HCD relies on continuous user feedback and iterative refinement."]
+ ]
+},
+{
+ id:"mod1", name:"Moderate – Set 1", level:"Moderate", color:"var(--mod)", mins:60,
+ qs:[
+["Why does diffuse mode thinking fail to yield insights on an empty mind?",["Diffuse mode requires high active adrenaline","It only reorganizes material already loaded via focused effort","It works exclusively during deep sleep cycles","It only processes mathematical formulas"],1,"Rule of thumb: struggle in focused mode first, then step away."],
+["A senior engineering manager insists on a legacy database structure for a modern social app without evaluating user needs. This best exemplifies:",["Fear of Failure","The Expertise Trap","Conformity","Functional Fixedness"],1,"The expertise trap occurs when past expertise causes over-reliance on old solutions."],
+["Which sequence accurately reflects the progression from abstract thought to commercial impact?",["Invention → Idea → Innovation → Value","Creativity → Idea → Invention → New Thing → Innovation → Value","Idea → Innovation → Invention → Value","Innovation → Invention → Creativity → Value"],1,"Creativity forms the idea, invention turns it into an artefact, and innovation delivers value in use."],
+["How does the Stanford d.school framework handle failure or unexpected user feedback during testing?",["The project is aborted immediately","Iteration loops back from Test to Empathize or Define","The team moves directly to mass production","Feedback is discarded if the budget is met"],1,"The dashed loop from Test back to Empathize makes the workflow iterative."],
+["In 2009, Airbnb increased bookings dramatically not by re-engineering their code, but by:",["Doubling their marketing budget","Renting a camera and taking high-quality photos of host listings in person","Lowering listing prices globally","Introducing AI search algorithms"],1,"Direct observation and empathetic, non-scalable action solved the real user issue."],
+["Google Glass initially failed commercially because:",["The technology was non-functional","It lacked Desirability due to social/privacy concerns and unaddressed user needs","It was too cheap to be taken seriously","It violated global environmental regulations"],1,"Technical innovation without user desirability sits outside the IDEO innovation overlap."],
+["Dr. V reframed cataract surgery at Aravind Eye Hospital by looking at which analogous industry?",["Luxury hotel hospitality","McDonald's fast-food assembly line","Automotive manufacturing","Commercial airline scheduling"],1,"McDonald's served as an analogous design reference for scalable, low-cost delivery."],
+["How did Aravind Eye Hospital achieve financial self-sustainability while providing free care to over 50% of patients?",["Relying on government subsidies","Cross-subsidy pricing and in-house manufacturing (Aurolab)","Using inferior surgical equipment for free patients","Charging mandatory high registration fees"],1,"Vertical integration and cross-subsidy kept care affordable without quality loss."],
+["An open-ended question during an empathy interview is designed to:",["Confirm the designer's pre-existing hypothesis","Invite rich, descriptive stories without steering the user's response","Force a binary Yes/No response","Test the user's technical literacy"],1,"Open-ended questions avoid bias and reveal unexpected insights."],
+["In the bucket property-listing exercise, why did \"megaphone\" appear as a usage?",["Because the bucket was yellow","Students listed the physical property \"amplifies sound\" rather than focusing on the object name","It was copied from a textbook","By random chance"],1,"Listing properties breaks functional fixedness by detaching utility from the object name."],
+["Why is \"Students need an attendance app\" a weak insight statement?",["It is too long","It jumps to a pre-conceived solution instead of defining the underlying user need","It does not list the software framework","It includes numerical stats"],1,"Insights must describe the underlying human barrier or motivation, not prescribe features."],
+["The primary distinction between well-defined and wicked problems is:",["Well-defined problems have clear paths and single solutions; wicked problems are interconnected with no single right/wrong answers","Wicked problems can be solved using simple calculus","Well-defined problems only occur in sociology","Wicked problems are always easy to prototype"],0,"Wicked problems (e.g., climate change) are complex, systemic, and lack definitive answers."],
+["What is the danger of mixing divergent and convergent thinking simultaneously?",["It speeds up the process too much","Premature evaluation kills creative, fragile ideas before they develop","It increases prototype costs","It violates legal compliance"],1,"Deferring judgment is essential; evaluating during generation destroys divergence."],
+["In SCAMPER, scaling a product's physical dimensions down (Minify) is exemplified by:",["Adding a solar charger to a bag","Mini pocket projectors replacing room-sized projectors","Replacing paper with cloth","Changing store delivery steps"],1,"Minify reduces size or weight while retaining core utility."],
+["What makes \"Reverse Thinking\" effective when a team is stuck?",["It forces members to code backwards","Brains find it easier to criticize and destroy, which flips into constructive design rules","It eliminates the need for user empathy","It lowers technical requirements"],1,"Identifying ways to ruin an experience highlights precise failure modes to prevent."],
+["How does Zerodha's discount brokerage model demonstrate strategic ideation?",["Charging higher percentages to rich traders","Questioning the industry assumption that brokerage must be a percentage-based fee","Spending heavily on TV commercials","Opening physical offices in every city"],1,"Zerodha replaced percentage fees with flat fees powered by tech infrastructure."],
+["In a weighted decision matrix, what is the purpose of assigning weights to criteria?",["To make the math more complicated","To force the team to align on relative priorities before evaluating options","To ensure every option gets equal points","To bypass user feedback"],1,"Weighting ensures critical metrics (e.g., safety) carry appropriate impact."],
+["What is the key takeaway of the VARK research evidence note in the curriculum?",["Students must be taught strictly in their preferred style to pass exams","Matching instruction to VARK preference fails to show empirical learning gains in controlled studies","VARK is a complete myth with no reflection value","VARK replaces cognitive intelligence metrics"],1,"VARK promotes self-awareness, but style-matched teaching claims don't hold up in research."],
+["Which SCAMPER move is often the most uncomfortable for teams yet yields the highest simplification value?",["Substitute","Eliminate","Combine","Adapt"],1,"Elimination forces teams to strip non-essential components and challenge assumptions."],
+["On an Impact-Effort matrix, an item with High Impact and Low Effort is categorized as:",["Strategic Priority","Quick Win / Top Priority","Low Priority","Avoid"],1,"High impact with minimal effort is an immediate quick win."],
+["What separates genuine human-centred design from standard engineering disguised as DT?",["Using mobile app frameworks","Starting with direct user observation before defining solutions","Having a large developer team","Using expensive CAD software"],1,"Building an app first and surveying second is engineering; DT starts with empathy."],
+["What does an empty branch on a multi-branch mind map signal to a design team?",["A mistake that must be erased","An unexplored design opportunity requiring further ideation","A completed task","Low user interest"],1,"Sparse or empty branches indicate unexamined areas in the problem space."],
+["Lawson's classic experiment compared scientists and designers, finding that:",["Scientists are solution-focused; designers are problem-focused","Scientists are problem-focused; designers are solution-focused (learn by synthesizing/prototyping)","Both work identically","Designers use pure mathematics exclusively"],1,"Designers generate and test solutions rapidly to understand the problem's boundaries."],
+["While observing students, a team notices heavy books used to hold doors open. In AEIOU, the heavy book is classified under:",["Activities","Objects","Users","Interactions"],1,"Objects are the physical items and tools present in the user environment."],
+["What is \"computational empathy\" in software design?",["AI systems that feel human emotions","Systems designed to detect user state/context and adapt interactions","Automated coding scripts","Emotionally expressive avatars"],1,"It leverages data to tailor UI/UX to inferred user states."],
+["Which of the following is an example of Incremental Invention?",["Traditional taxis → Uber","USB-A → USB Type-C","Physical stores → Amazon","DVD rentals → Netflix"],1,"USB-A to USB-C is a small, evolutionary improvement to an existing standard."],
+["During silent affinity clustering, why is talking initially banned?",["To save time on meetings","To prevent dominant voices from influencing how ideas are grouped","Because the room must remain quiet","To speed up typing"],1,"Silent sorting prevents bias and gives equal voice to all team members."],
+["What role do constraints play in constraint framing?",["They destroy creative potential","They act as boundary conditions that guide and inspire focused creativity","They determine the legal fees","They dictate the team hierarchy"],1,"Constraints frame the design space; turning limits into opportunities fuels innovation."],
+["An explicit need differs from an implicit need because an explicit need:",["Is hidden deep in user psychology","Is directly stated and requested by the user","Is observed purely through non-verbal actions","Is always technically impossible"],1,"Explicit needs are directly articulated; implicit needs must be inferred from behavior."],
+["In the d.school model, the \"Define\" phase produces which primary output?",["CAD drawing","Actionable Problem Statement / Point of View (POV)","High-fidelity prototype","Marketing pitch deck"],1,"Define synthesizes raw empathy data into a clear problem statement."]
+ ]
+},
+{
+ id:"mod2", name:"Moderate – Set 2", level:"Moderate", color:"var(--mod)", mins:60,
+ qs:[
+["A student struggles on a coding bug for three hours without success. She goes for a run, and the solution suddenly appears. Why did this happen?",["The run cleared all data from memory","Diffuse mode reorganized neural information loaded during three hours of focused struggle","Exercise replaces technical understanding","Diffuse mode operates best without prior focused effort"],1,"Diffuse thinking works on material previously struggled with during focused effort."],
+["A developer insists on using an old framework because \"we have used it for five years,\" despite it failing to support new mobile user needs. Which cognitive block is this?",["Fear of Failure","The Expertise Trap","Conformity","Functional Fixedness"],1,"Over-relying on past success leads to the expertise trap."],
+["Which progression correctly maps the path to real-world value creation?",["Creativity → Idea → Invention → New Thing → Innovation → Value","Invention → Innovation → Creativity → Idea","Idea → Innovation → Value → Invention","Innovation → Invention → Value → Idea"],0,"Creativity forms the idea, invention creates the artefact, innovation delivers value."],
+["How does the Stanford d.school framework handle test failure?",["Terminate project","Loop back iteratively to Empathize or Define based on user feedback","Launch anyway","Ignore user comments"],1,"Testing yields new evidence that restarts empathy or definition loops."],
+["Airbnb's founders broke flat revenue in 2009 by:",["Quadrupling ad spending","Flying to New York to personally photograph host listings in high quality","Cutting prices by 50%","Automating customer support"],1,"Direct empathetic observation revealed poor photography suppressed bookings."],
+["Google Glass initially failed commercially because:",["It didn't turn on","It lacked Desirability due to privacy concerns and social awkwardness","It was too cheap","It lacked technical feasibility"],1,"Technical innovation without user desirability fails in market adoption."],
+["Dr. V reframed cataract surgery at Aravind Eye Hospital by studying:",["Luxury hotels","McDonald's fast-food assembly line","Car manufacturing","Airline booking systems"],1,"He used fast-food assembly lines as an analogous design reference."],
+["Aravind Eye Hospital provides free surgeries to over half its patients while remaining financially self-sustaining through:",["Government donations","Cross-subsidy pricing and local manufacturing (Aurolab)","Using untrained surgeons for free patients","Compulsory registration fees"],1,"Vertical integration and cross-subsidy pricing power their model."],
+["Open-ended interview questions are designed to:",["Force a Yes/No answer","Invite rich, unbiased stories and insights","Test coding skills","Confirm designer bias"],1,"Open questions allow users to express authentic experiences."],
+["Listing properties before listing uses breaks functional fixedness because:",["It focuses on physical attributes rather than conventional labels","It reduces team size","It speeds up meeting time","It copies existing products"],0,"Focusing on properties detaches utility from the object name."],
+["Why is \"Students need an attendance app\" a weak insight statement?",["It is too short","It prescribes a solution instead of framing the underlying user barrier","It lacks statistics","It mentions students"],1,"Insights must define underlying human needs rather than feature requests."],
+["The key difference between well-defined and wicked problems is:",["Well-defined problems have clear paths and single right answers; wicked problems are interconnected and lack single right answers","Wicked problems are solved with math equations","Well-defined problems occur only in design","They are identical"],0,"Wicked problems involve systemic trade-offs without single answers."],
+["Mixing divergent and convergent thinking simultaneously is harmful because:",["It speeds up brainstorming","Premature judgment kills novel ideas before they mature","It increases prototype costs","It violates copyright"],1,"Deferring judgment is required to keep creative options open."],
+["SCAMPER's Minify prompt is illustrated by:",["Adding a solar panel to a bag","Mini pocket projectors replacing heavy room projectors","Replacing plastic with cloth","Changing delivery steps"],1,"Minifying scales down size or weight while preserving utility."],
+["Reverse Thinking is effective when a team is stuck because:",["It forces members to code backwards","Identifying ways to ruin a system reveals concrete actions to improve it","It avoids user research","It lowers costs"],1,"Flipping failure conditions exposes actionable design instructions."],
+["Zerodha transformed discount stockbroking by:",["Charging higher percentage fees","Questioning the assumption that brokerage fees must be percentage-based","Spending millions on TV ads","Building physical offices everywhere"],1,"Zerodha replaced percentage commissions with flat-fee tech platforms."],
+["In a weighted matrix, assigning criteria weights serves to:",["Complexify math","Force team alignment on relative priorities before scoring options","Give equal points to everything","Skip user testing"],1,"Weighting ensures critical metrics drive the decision."],
+["Evidence regarding VARK learning styles indicates:",["Teaching students strictly in their VARK preference improves exam results","Style-matched teaching fails to improve results in controlled studies","VARK is a complete scientific fact","VARK replaces IQ testing"],1,"Research shows style-matched teaching claims do not hold up empirically."],
+["Which SCAMPER prompt is often uncomfortable but yields high simplification value?",["Substitute","Eliminate","Combine","Adapt"],1,"Elimination forces teams to strip non-essential parts."],
+["An idea with High Impact and Low Effort on an Impact-Effort matrix is a:",["Strategic Priority","Quick Win / Top Priority","Low Priority","Item to Avoid"],1,"High impact with low effort delivers immediate top-priority wins."],
+["What distinguishes genuine Human-Centred Design from traditional engineering?",["Using app frameworks","Beginning with direct user observation before defining solutions","Large developer teams","CAD software usage"],1,"HCD starts with empathy rather than pre-selected solutions."],
+["An empty branch on a multi-branch mind map indicates:",["A mistake to erase","An unexplored design opportunity needing ideation","A finished feature","Zero user interest"],1,"Sparse branches highlight unexamined problem areas."],
+["Lawson's experiment comparing scientists and designers showed:",["Scientists are solution-focused; designers are problem-focused","Scientists are problem-focused; designers are solution-focused (learning by testing solutions)","Both work identically","Designers only use pure math"],1,"Designers generate and test rapid solutions to understand problems."],
+["Observing a student using a heavy book to prop a door open records the book as an:",["Activity","Object","User","Interaction"],1,"Objects are physical items present in the setting."],
+["Computational empathy in software design involves:",["AI systems feeling true human emotions","Systems detecting user context/state to adapt interactions appropriately","Automated build scripts","Expressive 3D avatars"],1,"Computational empathy uses data to tailor interactions to inferred states."],
+["An example of Incremental Invention is:",["Taxis → Uber","USB-A → USB Type-C","Stores → Amazon","DVDs → Netflix"],1,"Evolutionary improvements to existing standards are incremental."],
+["Banning talking during early affinity sorting serves to:",["Save meeting costs","Prevent dominant voices from steering categorization bias","Keep quiet rooms","Speed up typing"],1,"Silent sorting allows patterns to emerge without verbal influence."],
+["In constraint framing, constraints act as:",["Creative destroyers","Boundary conditions that inspire focused creativity","Legal fees","Corporate hierarchies"],1,"Constraints frame the design space to spur creative solutions."],
+["An explicit need differs from an implicit need because an explicit need is:",["Latent and unstated","Directly stated by the user","Observed purely through posture","Technically impossible"],1,"Explicit needs are consciously stated requests."],
+["The Define stage in the d.school model outputs a:",["CAD blueprint","Clear problem statement / POV","Functional code build","Pitch deck"],1,"Define synthesizes research into actionable problem statements."]
+ ]
+},
+{
+ id:"mod3", name:"Moderate – Set 3 (15 Qs)", level:"Moderate", color:"var(--mod)", mins:30,
+ qs:[
+["Why does diffuse mode require initial focused work on a problem?",["Diffuse mode needs high adrenaline","Diffuse mode reorganizes mental material already struggled with in focused mode","Diffuse mode only works while running","Diffuse mode processes math only"],1,"Focused struggle loads the problem substrate for diffuse processing."],
+["A senior lead insists on using the same architecture for every new project without reviewing user context. This illustrates:",["Fear of Failure","The Expertise Trap","Conformity","Functional Fixedness"],1,"Over-reliance on past solutions exemplifies the expertise trap."],
+["Which sequence correctly represents increasing practical impact?",["Idea → Invention → Innovation","Innovation → Idea → Invention","Invention → Innovation → Idea","Idea → Innovation → Invention"],0,"Ideas turn into inventions, which become innovations when value is delivered."],
+["How does the d.school framework view test feedback that rejects a prototype?",["As a total project failure","As fresh empathy data that restarts iterative refinement loops","As grounds to fire the design team","As irrelevant noise"],1,"Test feedback fuels iteration by providing fresh user insight."],
+["Airbnb's 2009 photography intervention succeeded because:",["It raised listing prices","Direct observation revealed amateur host photos caused low booking rates","It added AI filters","It doubled ad spending"],1,"Personal field visits uncovered the root cause behind flat bookings."],
+["Google Glass (2013) failed in the consumer market primarily due to:",["Hardware power failures","Unaddressed user Desirability and privacy/social concerns","Low price point","Manufacturing delays"],1,"Technological capability without user desirability leads to market failure."],
+["Dr. V reframed cataract surgery access by adapting principles from:",["Hotel room service","McDonald's fast-food assembly line","Airport baggage handling","Railroad timetables"],1,"Fast-food assembly lines served as an analogous reference for scalable care."],
+["Aravind Eye Hospital maintains economic viability while giving free care by:",["Depending on government relief","Cross-subsidy pricing and in-house lens manufacturing at Aurolab","Reducing surgical quality for free patients","Charging high consultation fees to all"],1,"Aurolab's low-cost lenses and tiered comfort options cross-subsidize care."],
+["Open-ended interview questions are preferred over leading questions because:",["They yield short answers","They avoid introducing designer bias into user responses","They can be auto-graded","They save time"],1,"Open probes encourage authentic user narratives without bias."],
+["Listing properties of a plastic bucket first allows designers to:",["Discover non-obvious uses like \"megaphone\" by breaking functional fixedness","Buy cheaper buckets","Avoid team discussions","Lower plastic usage"],0,"Property analysis detaches utility from predefined labels."],
+["Why is \"Users need a chatbot\" a poorly framed problem statement?",["Chatbots are obsolete","It prescribes a specific technical solution instead of framing the underlying user barrier","It lacks cost data","It uses the word chatbot"],1,"Problem framing must articulate user needs rather than feature requests."],
+["Ill-defined problems differ from well-defined problems because ill-defined problems:",["Have clear single correct solutions","Lack clear paths, constraints, and unique answers","Only occur in math exams","Are solved in minutes"],1,"Ill-defined challenges present ambiguous paths and multiple potential options."],
+["The main danger of judging ideas during generation is:",["Spending too much paper","Stifling creative output and killing wild ideas prematurely","Increasing developer salaries","Violating server rules"],1,"Premature evaluation halts divergent idea generation."],
+["SCAMPER's Minify prompt is demonstrated when:",["Phone displays grow larger","Projectors shrink into hand-held mini projectors","Car engines switch to electric","Delivery steps multiply"],1,"Minifying scales down size while preserving functionality."],
+["Reverse thinking helps design teams because:",["It rewrites code backwards","Brains find it easy to spot ways to ruin things, which flip into design rules","It eliminates prototyping","It cuts project costs"],1,"Identifying how things could fail gives concrete rules for making them succeed."]
+ ]
+},
+{
+ id:"hard1", name:"Hard – Set 1", level:"Hard", color:"var(--hard)", mins:75,
+ qs:[
+["A hospital implements an AI diagnostic tool with 99% technical accuracy, but doctors reject it because it requires 15 extra minutes of manual data entry per patient. Which IDEO lens interaction failed, and why?",["Feasibility failed because the code was buggy","Desirability and operational feasibility failed because the workflow disrupted clinician context","Viability failed due to server hosting costs","No failure occurred; technical accuracy overrides user preference"],1,"High technical feasibility without operational desirability leads to user rejection."],
+["Why did Google Glass succeed as \"Glass Enterprise Edition\" in warehouses after failing in the consumer market, despite near-identical hardware?",["Technicians were forced to buy it by company policy","The industrial context changed: hands-free utility outweighed aesthetic and privacy concerns","Enterprise pricing was reduced to $10","Consumer batteries were defective"],1,"Desirability is contextual; utility depends on the user's environment and needs."],
+["A team generates 100 ideas. Minutes 1–4 yield 80 standard ideas, while minutes 7–8 yield 20 unusual ones. Why are the late ideas often higher in innovation value?",["The team got tired and wrote random words","Obvious solutions were exhausted, forcing deeper diffuse re-combinations","Late ideas are always cheaper to build","Early ideas are automatically illegal"],1,"Pushing past cognitive availability exhausts cliché responses, enabling novel connections."],
+["A low-cost rural incubator is cheap (Viable) and works off-grid (Feasible), but nurses refuse it because its black color resembles local mourning traditions. Which IDEO zone is it in?",["Core innovation intersection","Overlap of Feasibility and Viability, lacking Desirability","Pure Desirability zone","Unfeasible zone"],1,"Missing cultural desirability keeps it outside the triple intersection, leading to field failure."],
+["User A says \"I love the food here,\" but leaves 70% of the plate uneaten and eats snacks brought from home. How should an empathetic designer interpret this?",["Record the verbal statement as truth and ignore the plate","Identify a \"say-do gap\" where social desirability bias hides an implicit frustration","Mark User A as an invalid data point","Assume User A is not hungry"],1,"Observed behavior often contradicts verbal feedback, revealing implicit needs."],
+["Contrast the d.school framework with Waterfall. What is the structural economic risk of Waterfall in wicked-problem domains?",["It spends too much time on early user testing","It defers user validation to the end, making error correction very costly after full build","It allows too many iterative loops","It lacks technical documentation"],1,"Linear models lock in requirements early; flawed assumptions found at launch force expensive rework."],
+["Applying SCAMPER's \"Reverse/Rearrange\" to traditional university lectures yields which modern model?",["Online multiple-choice tests","The Flipped Classroom","Longer 3-hour physical lectures","Canceling assignments"],1,"Reversing lecture and homework order reshapes classroom engagement."],
+["Team Alpha weights Cost 50%, Portability 30%, Speed 20%. Team Beta weights Pathogen Removal 50%, Cost 30%, Portability 20%. What does this divergence reveal?",["Team Alpha made a calculation error","A strategic priority disagreement: Alpha optimizes for market reach; Beta for clinical safety","The matrix format is invalid","Filtration speed is irrelevant"],1,"Matrix weights make value trade-offs explicit before scoring."],
+["Reframing Aravind's question from \"How do we treat more eye patients?\" to \"How does McDonald's serve millions cheaply and consistently?\" represents which cognitive leap?",["Direct competitor benchmarking","Analogous inspiration that breaks sector-bound mental models","Functional fixedness","Linear root-cause analysis"],1,"Analogous inspiration extracts process principles from unrelated industries."],
+["An idea lands in the High Relevance / Low Feasibility quadrant (\"Consider\") of a 2×2 matrix. What is the best next step?",["Permanently discard it","Deconstruct it and prototype a simpler, scaled-down version to improve feasibility","Build it immediately regardless of feasibility","Change the axis labels"],1,"High-relevance ideas should be reframed or prototyped as feasible variants."],
+["Why is Mendeleev's discovery of the Periodic Table a classic example of brain processing dynamics?",["He solved it purely by random guesswork","Intense focused effort loaded the data, enabling diffuse mode (sleep) to synthesize the pattern","He avoided studying chemistry beforehand","He used a computer model"],1,"Focused struggle supplies the substrate that diffuse processing reorganizes into breakthroughs."],
+["What is the primary structural defect of this HMW: \"How might we build an AI-powered portal to send SMS grade alerts to parents?\"",["It is too broad","It embeds a specific technical solution, limiting the solution space","It lacks financial budgets","It targets parents instead of students"],1,"HMW statements should frame the user goal without prescribing a technical solution."],
+["A design-detective team notices a brick placed on a pull-door handle to keep it propped open. This highlights:",["High product durability","A design failure where users improvise workarounds for bad access design","A well-designed door system","Proper campus maintenance"],1,"Workarounds show user intent overcoming flawed design."],
+["How does the \"Expertise Trap\" sabotage senior architects during Ideate?",["They lack coding skills","Deep experience builds strong neural pathways, so they default to past templates instead of exploring novel paths","They refuse to work in teams","They generate too many wild ideas"],1,"Expertise leads to over-reliance on past solutions in novel contexts."],
+["What is the fundamental difference between an ill-defined problem and a wicked problem?",["Ill-defined problems are mathematical; wicked problems are financial","Ill-defined problems have unclear paths/solutions; wicked problems are interconnected social systems with no definitive right/wrong answers","Ill-defined problems are easy; wicked problems are solved in 5 minutes","They are identical terms"],1,"Wicked problems (e.g., healthcare access) involve multi-stakeholder trade-offs where solutions cause secondary impacts."],
+["Observing \"a student waiting in line while repeatedly checking their watch and sighing\" captures which AEIOU elements?",["Objects and Environments","Activities and Interactions (or user states)","Financials and Legal","System architectures"],1,"The action (waiting) and behavioral interaction/state express frustration in context."],
+["Using SCAMPER's \"Substitute\" to replace plastic in a water bottle with biodegradable algae gel most directly addresses which lens?",["Technical Feasibility","Environmental sustainability / Viability","Corporate profitability","Legacy compatibility"],1,"Substitution targets material impact and long-term ecological viability."],
+["Why does d.school emphasize \"Deferring Judgment\" during Ideation?",["Judgment takes too much speaking time","Critical evaluation activates analytical filters that suppress creative associations","Ideas do not need evaluation","It guarantees legal protection"],1,"Evaluation halts divergent synthesis, reducing idea variety and volume."],
+["Goal: \"Improve library quietness.\" Inversion: \"How do we make it as noisy as possible?\" One bad idea: \"Play loud music.\" Reversing this yields which valid design action?",["Ban all speakers from campus","Install acoustic masking / ambient white-noise systems to damp noise spikes","Play quiet music","Close the library"],1,"Inverting deliberate sound creation leads to active acoustic control."],
+["What makes an Empathy Map a synthesis tool rather than a raw data sheet?",["It uses colorful sticky notes","It organizes observations (Says, Does) alongside inferred states (Thinks, Feels) to reveal latent contradictions","It calculates user averages automatically","It replaces field research"],1,"Empathy maps categorize data to infer unstated motivations and feelings."],
+["A startup spends 6 months building an AI tutor app; students abandon it because they prefer group study. Which step was skipped?",["Technical debugging","Early Empathize/Define research and low-fidelity prototype validation","Server scalability testing","Trademark registration"],1,"Skipping user-context validation leads to building products users don't desire."],
+["What is the danger of relying solely on quantitative surveys (e.g., 5,000 responses) when identifying problems?",["The data size is too small","Metrics show what is happening but not why users behave that way","Quantitative data is always inaccurate","Surveys take too long"],1,"Surveys lack qualitative depth; observation reveals root causes."],
+["How does Inversion Thinking protect a team against systemic project failure?",["It guarantees 100% market adoption","It systematically identifies failure modes in advance so preventative measures can be designed","It eliminates project budget limits","It automates code compilation"],1,"Inversion focuses on avoiding failure vectors before committing capital."],
+["A team applies SCAMPER's \"Put to Another Use\" to decommissioned campus shuttle buses. Which concept fits?",["Selling the buses for scrap","Converting parked buses into mobile night-study hubs with Wi-Fi and solar charging","Buying new buses","Repainting the bus exterior"],1,"Repurposing existing assets for new functional goals defines \"Put to Another Use\"."],
+["In CPS (Creative Problem Solving), why is \"Clarify\" placed before \"Ideate\"?",["To draft financial contracts early","To ensure the team solves the root problem rather than surface symptoms","To shorten the project","It is optional and can be moved"],1,"Solving the wrong problem efficiently is a primary driver of design failure."],
+["\"An idea that is not research-backed can still become enormously popular.\" What lesson does the course draw regarding VARK?",["Popular tools are always scientifically true","Popular adoption does not equal scientific efficacy; preference and actual performance often diverge","Research should be ignored in Design Thinking","Popularity is the only metric of success"],1,"What users say they prefer does not always yield effective results."],
+["What is the purpose of the dashed line from Test back to Empathize in the d.school diagram?",["To mark optional phases","To show that testing provides fresh user insights, restarting the empathy/definition loop","To indicate where the project ends","To represent financial refund paths"],1,"Test results generate new evidence about user needs, driving continuous iteration."],
+["Which SCAMPER prompts were used when smartphones merged a phone, camera, music player, and GPS into one pocket device?",["Substitute and Reverse","Combine and Modify (Minify)","Eliminate and Adapt","Reverse and Substitute"],1,"Combining distinct devices into one miniature form factor uses Combine and Modify."],
+["A student says: \"I am strictly a Visual learner, so I cannot learn from lectures.\" How would a design educator respond using course concepts?",["Agree and excuse the student from lectures","Clarify that VARK is a reflection prompt, not a fixed limitation, and multimodal strategies work best","Force the student into Auditory training only","Re-test until they score Kinesthetic"],1,"VARK preferences are flexible reflection nudges, not rigid learning limits."],
+["Why is Affinity Clustering performed in SILENCE during early sticky-note grouping?",["To maintain library protocol","To allow non-verbal synthesis and prevent social dominance from steering categorization","To speed up the timer","Because talking is illegal in workshops"],1,"Silent categorization lets patterns emerge organically without debate bias."]
+ ]
+},
+{
+ id:"mix1", name:"Combined – Set 1", level:"Easy + Moderate + Hard", color:"var(--mix)", mins:60,
+ qs:[
+["[Easy] Focused mode thinking is characterized as:",["Associative and flexible","Logical, structured, and analytical","Unconscious and random","Relaxed and broad"],1,"Focused mode concentrates attention on structured tasks."],
+["[Easy] What are the four VARK learning styles?",["Visual, Auditory, Read/Write, Kinesthetic","Verbal, Analytical, Rational, Kinetic","Visual, Applied, Reasoning, Knowledge","Vocal, Action, Reflective, Kinesthetic"],0,"VARK = Visual, Auditory, Read/Write, Kinesthetic."],
+["[Easy] The inability to see new uses for an object beyond its original design is:",["Brainstorming","Functional fixedness","Divergent thinking","Empathy mapping"],1,"Functional fixedness locks objects into conventional roles."],
+["[Easy] Which d.school phase involves building physical or digital representations?",["Empathize","Ideate","Prototype","Define"],2,"Prototyping turns ideas into tangible, testable models."],
+["[Easy] SCAMPER is a tool used primarily for:",["Financial auditing","Idea generation and structured ideation","Coding software tests","Legal filing"],1,"SCAMPER provides 7 prompts to generate and modify ideas."],
+["[Easy] Divergent thinking focuses on:",["Selecting one answer","Generating many varied possibilities","Calculating budgets","Rejecting wild ideas"],1,"Divergence expands options and generates alternatives."],
+["[Easy] The three IDEO lenses are Desirability, Feasibility, and:",["Profitability","Viability","Scalability","Utility"],1,"Innovation lives at the intersection of Desirability, Feasibility, and Viability."],
+["[Easy] What does the 'A' in the AEIOU framework stand for?",["Action","Activities","Analysis","Assessment"],1,"AEIOU = Activities, Environments, Interactions, Objects, Users."],
+["[Easy] Brainstorming rule #1 is:",["Critique immediately","Defer judgment / no criticism","Limit ideas to five","Select the winner first"],1,"Suspending judgment keeps the divergent idea stream open."],
+["[Easy] Crazy 8s requires how many sketches in how many minutes?",["5 sketches in 5 minutes","8 sketches in 8 minutes","10 sketches in 2 minutes","4 sketches in 10 minutes"],1,"Crazy 8s is a fast sketching sprint: 8 panels in 8 minutes."],
+["[Moderate] A developer uses the exact same software architecture on every project without considering user context. This is:",["Conformity","The Expertise Trap","Fear of Failure","Premature Judgment"],1,"Over-reliance on past technical choices is the expertise trap."],
+["[Moderate] Why did Airbnb founders take professional photos of host listings?",["To increase listing fees","Direct observation revealed amateur photos suppressed trust and bookings","To test a new camera model","Because host profiles were illegal"],1,"Empathetic observation identified the real, non-scalable problem."],
+["[Moderate] In SCAMPER, replacing a metal component with lightweight carbon fiber is:",["Combine","Substitute","Reverse","Eliminate"],1,"Replacing materials or components is Substitute."],
+["[Moderate] What is the difference between Invention and Innovation?",["Invention makes money; Innovation is an idea","Invention creates a new thing; Innovation implements ideas to deliver real value","They are identical","Innovation comes before creativity"],1,"Innovation requires delivered value and user adoption."],
+["[Moderate] How does the bucket property technique overcome functional fixedness?",["By focusing on physical properties rather than conventional labels","By buying new buckets","By reducing group size","By copying competing products"],0,"Property analysis detaches utility from predefined names."],
+["[Moderate] What type of problem is climate change or poverty?",["Well-defined problem","Wicked problem","Linear problem","Simple problem"],1,"Wicked problems are complex, interconnected, and lack single right/wrong answers."],
+["[Moderate] An interview question that says \"You found our app easy to use, right?\" is:",["Open-ended","Leading / biased","Empathetic","Quantitative"],1,"Leading questions push participants toward a desired response."],
+["[Moderate] In a 2×2 matrix, high-feasibility and high-relevance ideas are tagged as:",["Avoid","Prioritise","Consider","Quick Wins"],1,"High relevance and high feasibility are the core priorities."],
+["[Moderate] What does \"Yes, and...\" achieve in group brainstorming?",["Speeds up decision making","Validates contributions and builds on them without shutting down ideation","Eliminates bad ideas automatically","Calculates costs"],1,"\"Yes, and...\" encourages additive creative thinking."],
+["[Moderate] What is the output of the \"Define\" stage in Design Thinking?",["Final product","Clear problem statement / HMW","Code repository","Survey raw data"],1,"Define distills research into actionable problem statements."],
+["[Hard] Evaluate why Google Glass failed in 2013 despite high technological innovation.",["Battery exploded during testing","It lacked user Desirability due to privacy concerns and social awkwardness","It was legally banned worldwide","Google lacked funding"],1,"High technical feasibility without user desirability leads to market failure."],
+["[Hard] Patients miss appointments and say \"I forgot,\" but field research shows bus tickets cost 2 days' wages. How should the team reframe the problem?",["Build an automated SMS reminder app","Reframe from \"forgetfulness\" to \"financial and transportation access barriers\"","Cancel missed appointments permanently","Increase missed-appointment fines"],1,"Direct observation uncovers systemic root causes behind stated excuses."],
+["[Hard] How did Dr. V use \"Analogous Inspiration\" to revolutionize eye surgery at Aravind?",["By studying rival eye clinics","By adapting McDonald's assembly-line flow to improve efficiency without sacrificing quality","By importing expensive foreign equipment","By hiring foreign doctors"],1,"Cross-industry learning created high-throughput, low-cost surgical care."],
+["[Hard] Why does mixing divergent and convergent thinking destroy creative output?",["It violates university testing formats","Early analytical evaluation suppresses fragile, novel ideas before they develop","It lengthens project timelines","It confuses software compilers"],1,"Critical evaluation stops divergent flow; phases must run sequentially."],
+["[Hard] What fundamental assumption did Zerodha shatter compared with traditional stockbrokers?",["That trading requires computers","That brokerage fees must be a percentage of trade value","That stock markets are illegal","That offices must be built in every village"],1,"Zerodha replaced percentage commissions with flat, tech-driven pricing."],
+["[Hard] A team generates 30 ideas in 8 minutes. Why do late ideas (minutes 6–8) often contain higher novelty?",["Members start guessing randomly","Conventional cognitive templates are exhausted, forcing deeper diffuse synthesis","Early ideas are erased automatically","Late ideas require no feasibility"],1,"Exhausting cliché answers forces deeper creative connections."],
+["[Hard] Analyze the structural flaw in this HMW: \"How might we create a mobile app to display cafeteria menus?\"",["Mobile apps are outdated","It embeds a specific solution (mobile app) rather than framing the user need (accessing menu info)","Cafeteria food is unhealthy","It lacks a budget total"],1,"Good HMW statements focus on user needs without prescribing implementation."],
+["[Hard] Why is \"Reverse Thinking\" effective for entrenched operational problems?",["It reverses the coding sequence","Identifying ways to cause failure exposes hidden assumptions and reveals preventative actions","It avoids user interviews","It lowers legal liability"],1,"Brains criticize easily; flipping failure vectors yields concrete design moves."],
+["[Hard] What makes an Empathy Map synthesized analysis rather than simple transcript notes?",["It uses charts and colors","It maps explicit actions/statements against implicit thoughts/feelings to surface hidden contradictions","It calculates participant demographics","It replaces physical prototypes"],1,"Empathy maps reveal gaps between what users say and what they do/feel."],
+["[Hard] In IDEO's framework, an idea that is Desirable and Feasible but lacks Viability will ultimately fail because:",["Users will hate it","It cannot sustain itself economically over time","It cannot be built technically","It violates physics"],1,"Without economic viability, even desirable and buildable ideas collapse once initial funding ends."]
+ ]
+}
+];
+
+/* ---------- STATE & HELPERS ---------- */
+const app = document.getElementById("app");
+const L = ["A","B","C","D"];
+let S = null; // current attempt
+let settings = { shuffle:true, exam:false, timer:true };
+let best = {};
+try { best = JSON.parse(localStorage.getItem("int335_best")||"{}"); } catch(e){}
+try { const s = JSON.parse(localStorage.getItem("int335_settings")||"null"); if(s) settings = Object.assign(settings,s); } catch(e){}
+function saveBest(){ try{ localStorage.setItem("int335_best", JSON.stringify(best)); }catch(e){} }
+function saveSettings(){ try{ localStorage.setItem("int335_settings", JSON.stringify(settings)); }catch(e){} }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function esc(s){ return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function fmt(sec){ const m=Math.floor(sec/60), s=sec%60; return m+":"+String(s).padStart(2,"0"); }
+let tick=null;
+
+function build(set, onlyIdx){
+  let items = set.qs.map((q,i)=>({i,q}));
+  if(onlyIdx) items = items.filter(x=>onlyIdx.includes(x.i));
+  const order = settings.shuffle ? shuffle(items) : items;
+  return {
+    set, exam:settings.exam, idx:0, start:Date.now(), elapsed:0, done:false,
+    qs: order.map(({i,q})=>{
+      let opts = q[1].map((t,k)=>({t,ok:k===q[2]}));
+      if(settings.shuffle) opts = shuffle(opts);
+      return { src:i, q:q[0], opts, exp:q[3], picked:null };
+    })
+  };
+}
+
+/* ---------- HOME ---------- */
+function home(){
+  clearInterval(tick); S=null;
+  app.innerHTML = `
+  <div class="top"><span class="brand">INT335 · Design Thinking</span>
+    <button class="ghost" id="theme">Toggle theme</button></div>
+  <div class="hero">
+    <h1>MCQ practice question bank</h1>
+    <p>${SETS.reduce((n,s)=>n+s.qs.length,0)} questions across ${SETS.length} sets. Pick a set, answer, and review what you missed.</p>
+  </div>
+  <div class="opts" role="group" aria-label="Practice options">
+    <label><input type="checkbox" id="o-shuffle" ${settings.shuffle?"checked":""}> Shuffle answer order</label>
+    <label><input type="checkbox" id="o-exam" ${settings.exam?"checked":""}> Exam mode (no feedback until the end)</label>
+    <label><input type="checkbox" id="o-timer" ${settings.timer?"checked":""}> Show timer</label>
+  </div>
+  <div class="sets">
+    ${SETS.map(s=>{
+      const b=best[s.id];
+      return `<button class="set" data-id="${s.id}" style="--c:${s.color}">
+        <span class="bar"></span>
+        <span class="body"><h3>${s.name}</h3>
+          <div class="meta">${s.level} · ${s.qs.length} questions · suggested ${s.mins} min</div></span>
+        <span class="best">${b!=null?`Best<b>${b}/${s.qs.length}</b>`:"Not attempted"}</span>
+      </button>`;}).join("")}
+  </div>`;
+  document.getElementById("theme").onclick=toggleTheme;
+  for(const [id,key] of [["o-shuffle","shuffle"],["o-exam","exam"],["o-timer","timer"]]){
+    document.getElementById(id).onchange=e=>{settings[key]=e.target.checked;saveSettings();};
+  }
+  app.querySelectorAll(".set").forEach(b=>b.onclick=()=>{
+    S=build(SETS.find(s=>s.id===b.dataset.id)); startTimer(); quiz();
+  });
+}
+function toggleTheme(){
+  const r=document.documentElement;
+  const dark = r.dataset.theme ? r.dataset.theme==="dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  r.dataset.theme = dark ? "light" : "dark";
+}
+
+/* ---------- QUIZ ---------- */
+function startTimer(){
+  clearInterval(tick);
+  tick=setInterval(()=>{
+    if(!S||S.done) return;
+    S.elapsed=Math.floor((Date.now()-S.start)/1000);
+    const t=document.getElementById("clock"); if(t) t.textContent=fmt(S.elapsed);
+  },1000);
+}
+function quiz(){
+  const q=S.qs[S.idx], n=S.qs.length;
+  const answered=S.qs.filter(x=>x.picked!==null).length;
+  const locked = !S.exam && q.picked!==null;
+  app.innerHTML = `
+  <div class="top"><span class="brand">${S.set.name}${S.exam?" · Exam mode":""}</span>
+    <button class="ghost" id="quit">Quit</button></div>
+  <div class="qhead"><span class="title">Question ${S.idx+1} of ${n}</span>
+    <span>${answered}/${n} answered${settings.timer?` · <span id="clock">${fmt(S.elapsed)}</span>`:""}</span></div>
+  <div class="prog" aria-hidden="true"><i style="width:${answered/n*100}%"></i></div>
+  <div class="nav" role="navigation" aria-label="Question navigator">
+    ${S.qs.map((x,i)=>{
+      let c="dot"; if(i===S.idx)c+=" cur";
+      if(x.picked!==null){ if(S.exam) c+=" done"; else c+= x.opts[x.picked].ok?" ok":" bad"; }
+      return `<button class="${c}" data-i="${i}" aria-label="Go to question ${i+1}">${i+1}</button>`;}).join("")}
+  </div>
+  <div class="card" style="--c:${S.set.color}">
+    <span class="tag">${S.set.level}</span>
+    <p class="q">${esc(q.q)}</p>
+    <div class="choices">
+      ${q.opts.map((o,k)=>{
+        let c="ch";
+        if(locked){ if(o.ok)c+=" ok"; else if(q.picked===k)c+=" bad"; }
+        else if(q.picked===k) c+=" sel";
+        return `<button class="${c}" data-k="${k}" ${locked?"disabled":""}><span class="l">${L[k]}</span><span>${esc(o.t)}</span></button>`;
+      }).join("")}
+    </div>
+    ${locked?`<div class="exp ${q.opts[q.picked].ok?"good":"wrong"}">
+      <strong>${q.opts[q.picked].ok?"Correct":"Incorrect — correct answer: "+L[q.opts.findIndex(o=>o.ok)]}</strong>${esc(q.exp)}</div>`:""}
+  </div>
+  <div class="actions">
+    <button class="btn sec" id="prev" ${S.idx===0?"disabled":""}>Previous</button>
+    ${S.idx<n-1
+      ? `<button class="btn" id="next">${(!S.exam&&q.picked===null)?"Skip":"Next"}</button>`
+      : `<button class="btn" id="finish">Finish &amp; see results</button>`}
+  </div>`;
+  app.querySelectorAll(".dot").forEach(d=>d.onclick=()=>{S.idx=+d.dataset.i;quiz();});
+  app.querySelectorAll(".ch").forEach(c=>c.onclick=()=>{
+    q.picked=+c.dataset.k; quiz();
+  });
+  const p=document.getElementById("prev"); if(p)p.onclick=()=>{S.idx--;quiz();};
+  const nx=document.getElementById("next"); if(nx)nx.onclick=()=>{S.idx++;quiz();};
+  const f=document.getElementById("finish"); if(f)f.onclick=()=>{
+    const left=S.qs.filter(x=>x.picked===null).length;
+    if(left && !confirm(left+" question(s) unanswered. Finish anyway?")) return;
+    finish();
+  };
+  document.getElementById("quit").onclick=()=>{ if(confirm("Quit this attempt? Progress will be lost.")) home(); };
+  window.scrollTo({top:0});
+}
+
+/* ---------- RESULTS ---------- */
+function finish(){
+  S.done=true; S.elapsed=Math.floor((Date.now()-S.start)/1000); clearInterval(tick);
+  const total=S.qs.length, correct=S.qs.filter(x=>x.picked!==null&&x.opts[x.picked].ok).length;
+  const full = S.qs.length===S.set.qs.length;
+  if(full && (best[S.set.id]==null || correct>best[S.set.id])){ best[S.set.id]=correct; saveBest(); }
+  S.score=correct; results("all");
+}
+function results(filter){
+  const total=S.qs.length, correct=S.score;
+  const skipped=S.qs.filter(x=>x.picked===null).length, wrong=total-correct-skipped;
+  const pct=Math.round(correct/total*100);
+  const verdict = pct>=85?"Excellent work.":pct>=65?"Solid. Review the misses below.":pct>=40?"Getting there. Re-read the explanations.":"Start with the explanations, then retry.";
+  const list=S.qs.map((x,i)=>({x,i})).filter(({x})=>{
+    const ok=x.picked!==null&&x.opts[x.picked].ok;
+    return filter==="all"||(filter==="wrong"&&!ok);
+  });
+  app.innerHTML=`
+  <div class="top"><span class="brand">${S.set.name} · Results</span>
+    <button class="ghost" id="theme">Toggle theme</button></div>
+  <div class="score"><span class="n">${correct}</span><span class="of">/ ${total} · ${pct}%</span></div>
+  <p style="margin:0;color:var(--muted)">${verdict}</p>
+  <div class="stats">
+    <div class="stat"><b style="color:var(--ok)">${correct}</b><span>Correct</span></div>
+    <div class="stat"><b style="color:var(--bad)">${wrong}</b><span>Incorrect</span></div>
+    <div class="stat"><b>${skipped}</b><span>Skipped</span></div>
+    <div class="stat"><b>${fmt(S.elapsed)}</b><span>Time taken</span></div>
+  </div>
+  <div class="row" style="margin-top:0">
+    <button class="btn" id="retry" ${correct===total?"disabled":""}>Retry ${total-correct} missed</button>
+    <button class="btn sec" id="again">Restart set</button>
+    <button class="btn sec" id="home">All sets</button>
+  </div>
+  <div class="filter">
+    <button data-f="all" class="${filter==="all"?"on":""}">All answers</button>
+    <button data-f="wrong" class="${filter==="wrong"?"on":""}">Missed only</button>
+  </div>
+  <div class="rev">
+    ${list.length?list.map(({x,i})=>{
+      const ok=x.picked!==null&&x.opts[x.picked].ok;
+      const ci=x.opts.findIndex(o=>o.ok);
+      return `<details ${ok?"":"open"}><summary><span class="mk ${ok?"ok":"bad"}">${ok?"✓":"✕"}</span><span>${i+1}. ${esc(x.q)}</span></summary>
+        <div class="det">
+          <p><b>Your answer:</b> ${x.picked===null?"Skipped":L[x.picked]+") "+esc(x.opts[x.picked].t)}</p>
+          ${ok?"":`<p><b>Correct answer:</b> ${L[ci]}) ${esc(x.opts[ci].t)}</p>`}
+          <p>${esc(x.exp)}</p></div></details>`;}).join(""):`<p style="color:var(--muted)">Nothing missed. Full marks.</p>`}
+  </div>`;
+  document.getElementById("theme").onclick=toggleTheme;
+  document.getElementById("home").onclick=home;
+  document.getElementById("again").onclick=()=>{S=build(S.set);startTimer();quiz();};
+  document.getElementById("retry").onclick=()=>{
+    const ids=S.qs.filter(x=>!(x.picked!==null&&x.opts[x.picked].ok)).map(x=>x.src);
+    S=build(S.set,ids);startTimer();quiz();
+  };
+  app.querySelectorAll(".filter button").forEach(b=>b.onclick=()=>results(b.dataset.f));
+  window.scrollTo({top:0});
+}
+home();
+</script>
+</body>
+</html>
